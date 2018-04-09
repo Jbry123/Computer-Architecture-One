@@ -55,6 +55,9 @@ class CPU {
     alu(op, regA, regB) {
         switch (op) {
             case 'MUL':
+            const indexA = parseInt(regA, 2);
+            const indexB = parseInt(regB, 2);
+            this.reg[indexA] = (this.reg[indexA] * this.reg[indexB]);
                 // !!! IMPLEMENT ME
                 break;
         }
@@ -94,6 +97,9 @@ class CPU {
                 break;
             case '00000001':
                 this.HLT();
+                break;
+            case '10101010':
+                this.alu('MUL', operandA, operandB);
                 break;
             default:
                 console.log('instruction code not found');
