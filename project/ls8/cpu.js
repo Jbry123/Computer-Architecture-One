@@ -69,12 +69,12 @@ class CPU {
         // index into memory of the instruction that's about to be executed
         // right now.)
 
-        const IR = this.ram.read(this.reg.PC);
+        const IR = this.ram.read(this.reg.PC); // binary number
 
         // !!! IMPLEMENT ME
 
         // Debugging output
-        console.log(`${this.reg.PC}: ${IR.toString(2)}`);
+        // console.log(`${this.reg.PC}: ${IR.toString(2)}`);
 
         // Get the two bytes in memory _after_ the PC in case the instruction
         // needs them.
@@ -86,13 +86,13 @@ class CPU {
         // Execute the instruction. Perform the actions for the instruction as
         // outlined in the LS-8 spec.
         switch (IR) {
-            case 0b10011001:
+            case '10011001':
                 this.LDI(operandA, operandB);
                 break;
-            case 0b01000011:
+            case '01000011':
                 this.PRN(operandA);
                 break;
-            case 0b00000001:
+            case '00000001':
                 this.HLT();
                 break;
             default:
@@ -105,17 +105,17 @@ class CPU {
         // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
         // instruction byte tells you how many bytes follow the instruction byte
         // for any particular instruction.
-        this.reg.PC + String(IR).slice(0, 2).toString(10);
+        this.reg.PC = this.reg.PC + parseInt(IR.slice(0, 2), 2) + 1;
     }
 
     PRN(register) {
-        register = register.toString(10) - 1;
-        console.log(this.reg[register]);
+        const index = parseInt(register, 2);
+        console.log('our answer: ', parseInt(this.reg[index], 2));
     }
 
     LDI(register, immediate) {
-        register = register.toString(10) - 1;
-        this.reg[register] = immediate;
+        const index = parseInt(register, 2);
+        this.reg[index] = immediate;
     }
 
     HLT() {
