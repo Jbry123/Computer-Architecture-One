@@ -14,11 +14,11 @@ class CPU {
         this.ram = ram;
 
         this.reg = new Array(8).fill(0); // General-purpose registers R0-R7
-        
+
         // Special-purpose registers
         this.reg.PC = 0; // Program Counter
     }
-	
+
     /**
      * Store value in memory address, useful for program loading
      */
@@ -70,54 +70,56 @@ class CPU {
         // right now.)
 
         const IR = this.ram.read(this.reg.PC);
-        
+
         // !!! IMPLEMENT ME
-        
+
         // Debugging output
         console.log(`${this.reg.PC}: ${IR.toString(2)}`);
-        
+
         // Get the two bytes in memory _after_ the PC in case the instruction
         // needs them.
         const operandA = this.ram.read(this.reg.PC + 1);
         const operandB = this.ram.read(this.reg.PC + 2);
-        
+
         // !!! IMPLEMENT ME
-        
+
         // Execute the instruction. Perform the actions for the instruction as
         // outlined in the LS-8 spec.
-        switch(IR) {
-            case 10011001: 
-                this.LDI();
+        switch (IR) {
+            case 0b10011001:
+                this.LDI(operandA, operandB);
                 break;
-            case 01000011:
-                this.PRN();
+            case 0b01000011:
+                this.PRN(operandA);
                 break;
-            case 00000001:
+            case 0b00000001:
                 this.HLT();
                 break;
             default:
                 console.log('instruction code not found');
         }
-        
+
         // !!! IMPLEMENT ME
-        
+
         // Increment the PC register to go to the next instruction. Instructions
         // can be 1, 2, or 3 bytes long. Hint: the high 2 bits of the
         // instruction byte tells you how many bytes follow the instruction byte
         // for any particular instruction.
         this.reg.PC + String(IR).slice(0, 2).toString(10);
     }
-    
-    PRN() {
-        
+
+    PRN(register) {
+        register = register.toString(10) - 1;
+        console.log(this.reg[register]);
     }
-    
-    LDI() {
-        
+
+    LDI(register, immediate) {
+        register = register.toString(10) - 1;
+        this.reg[register] = immediate;
     }
 
     HLT() {
-
+        this.stopClock();
     }
 }
 

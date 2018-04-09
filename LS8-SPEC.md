@@ -17,8 +17,8 @@
 
 * `PC`: Program Counter, address of the currently executing instruction
 * `IR`: Instruction Register, contains a copy of the currently executing instruction
-* `MAR`: Memory Address Register, holds the memory address we're reading or writing
-* `MDR`: Memory Data Register, holds the value to write or the value just read
+* `MAR`: Memory Address Register, holds the memory address we're reading or writing //
+* `MDR`: Memory Data Register, holds the value to write or the value just read //
 * `FL`: Flags, see below
 
 
