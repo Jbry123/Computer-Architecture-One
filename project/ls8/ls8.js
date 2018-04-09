@@ -19,8 +19,8 @@ function loadMemory() {
     //     "00000001"  // HLT       Halt and quit
     // ];
 
-    const program = [fs.readFileSync('mult.ls8')];
-
+    const program = fs.readFileSync(process.argv[2], { encoding: 'binary' }).split('\n');
+    
     // const program = [
     
     // "10011001", //# LDI R0,8
@@ -42,7 +42,6 @@ function loadMemory() {
     }
 }
 
-console.log(fs.readFileSync('mult.ls8'));
 /**
  * Main
  */
