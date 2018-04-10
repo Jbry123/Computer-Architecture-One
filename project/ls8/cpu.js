@@ -55,9 +55,9 @@ class CPU {
     alu(op, regA, regB) {
         switch (op) {
             case 'MUL':
-            const indexA = parseInt(regA, 2);
-            const indexB = parseInt(regB, 2);
-            this.reg[indexA] = (this.reg[indexA] * this.reg[indexB]);
+                const indexA = parseInt(regA, 2);
+                const indexB = parseInt(regB, 2);
+                this.reg[indexA] = (this.reg[indexA] * this.reg[indexB]);
                 // !!! IMPLEMENT ME
                 break;
         }
