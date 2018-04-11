@@ -7,16 +7,25 @@
  */
 class CPU {
 
+
+
     /**
      * Initialize the CPU
      */
     constructor(ram) {
         this.ram = ram;
-
+        this.SP = 0xF4;
         this.reg = new Array(8).fill(0); // General-purpose registers R0-R7
 
         // Special-purpose registers
         this.reg.PC = 0; // Program Counter
+    }
+
+    ValueSP() { // get value of stack pointer
+       if (this.ram[0xF3] != 0) {
+            return this.ram[0xF3];
+       }
+       return this.ram[0xF4];
     }
 
     /**
@@ -25,6 +34,7 @@ class CPU {
     poke(address, value) {
         this.ram.write(address, value);
     }
+
 
     /**
      * Starts the clock ticking on the CPU
@@ -101,6 +111,10 @@ class CPU {
             case '10101010':
                 this.alu('MUL', operandA, operandB);
                 break;
+            case '01001100':
+                this.POP(operandA);
+            case '01001101':
+                this.PUSH(operandA);
             default:
                 console.log('instruction code not found');
         }
@@ -114,6 +128,7 @@ class CPU {
         this.reg.PC = this.reg.PC + parseInt(IR.slice(0, 2), 2) + 1;
     }
 
+
     PRN(register) {
         const index = parseInt(register, 2);
         console.log('our answer: ', parseInt(this.reg[index], 2));
@@ -126,6 +141,16 @@ class CPU {
 
     HLT() {
         this.stopClock();
+    }
+
+    PUSH(register) {
+        // this.ram[this.SP - 1] = this.ram[this.SP];
+        // this.SP = 0xF3;
+        // this.ram[SP] = this.reg[register];
+    }
+
+    POP(register) {
+        this.reg[register] = this.ram[this.SP]
     }
 }
 
