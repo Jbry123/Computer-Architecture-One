@@ -121,10 +121,9 @@ class CPU {
             case '10101000':
                 this.ADD(operandA, operandB);
                 break;
-            case '10100000':
-                this.CMP(operandA, operandB);
-                break;
             default:
+            console.log('could not retrieve machine code');
+            break;
         }
 
         // !!! IMPLEMENT ME
